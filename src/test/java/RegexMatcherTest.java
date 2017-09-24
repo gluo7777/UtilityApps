@@ -1,3 +1,5 @@
+import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
+import entity.Address;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,6 +42,7 @@ public class RegexMatcherTest {
     @Test
     public void matchDateFail(){
         String [] dates = new String[]{
+                "",
                 "01/11-1999",
                 "01-Jan-1999",
                 "01/11-1999",
@@ -70,6 +73,7 @@ public class RegexMatcherTest {
     @Test
     public void matchPhoneNumberFail(){
         String [] numbers = new String[]{
+                "",
                 "(469) 487 - 431",
                 "(46) 487 - 4318",
                 "(469) 48 - 4318",
@@ -82,6 +86,16 @@ public class RegexMatcherTest {
         };
         for(String number : numbers){
             assertFalse(matcher.isValidFormat(number, Strategy.PHONE));
+        }
+    }
+
+    @Test
+    public void testAccountNewInstance_WrongNumberArgsException(){
+        String address = "2310 Bahamas dr.,Garland,Texas,75044";
+        try{
+            Address.newInstance(address);
+        } catch (Exception e) {
+            assertEquals(e.getClass(),WrongNumberArgsException.class);
         }
     }
 
@@ -110,6 +124,7 @@ public class RegexMatcherTest {
     @Test
     public void matchAddressFail(){
         List<String> addresses = new LinkedList<>();
+        addresses.add("");
         addresses.add("Bahamas dr.,# 49,Garland,Texas,75044");
         addresses.add(",# 49,Garland,Texas,75044");
         addresses.add("-Bahamas dr.,# 49,Garland,Texas,75044");
@@ -130,8 +145,52 @@ public class RegexMatcherTest {
     }
 
     @Test
-    public void testGetDate(){
+    public void matchNumberSuccess(){
+        String numbers [] = new String[]{
+                "0",
+                ".1",
+                "1",
+                "100",
+                "1.0",
+                "1.10",
+                "1.1111111111",
+                "100.10",
+                "1000",
+                "1000.01",
+                "1,000",
+                "10,000",
+                "100,000",
+                "1,000,000",
+                "1,000,000.01",
+                "1,000,000,000.01",
+                "1000000000.01"
+        };
+        for(String number : numbers){
+            assertTrue(matcher.isValidFormat(number,Strategy.NUMBER));
+        }
+    }
 
+    @Test
+    public void matchNumberFail(){
+        String numbers [] = new String[]{
+                "",
+                "01",
+                "1.",
+                "1..",
+                "1,",
+                "1,,",
+                "1.000,000",
+                ",1",
+                ".0",
+                "1.1.1",
+                "1,1",
+                "1000,000",
+                "1.000.000",
+                "$1",
+        };
+        for(String number : numbers){
+             assertFalse(matcher.isValidFormat(number,Strategy.NUMBER));
+        }
     }
 
     @After

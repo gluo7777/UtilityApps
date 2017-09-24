@@ -46,7 +46,16 @@ public enum CommonPatterns {
     SUITE("^((?:[A-Za-z]+|#)?[ ]?\\d+)?$"),
     CITY("^([A-Za-z0-9][A-Za-z0-9- ]*)$"),
     STATE("^([A-Za-z]+)$"),
-    ZIP("^(\\d+-?\\d*)$")
+    ZIP("^(\\d+-?\\d*)$"),
+
+
+    /**
+     * Valid number string
+     * First number cannot be a 0
+     * Must either have commas or no commas, but cannot be a mix
+     * optional decimal followed by 1-2 numbers
+     */
+    NUMBER("^([1-9]\\d{0,2}(?:(?:,\\d{3})+|\\d+)?(?:\\.\\d+)?|(?:0|0?(?:\\.[1-9]\\d*)))$")
     ;
 
     /**

@@ -5,7 +5,8 @@ public enum Strategy {
     DATE(100),
     PHONE(101),
     EMAIL(102),
-    ADDRESS(103)
+    ADDRESS(103),
+    NUMBER(104)
     ;
 
     public final int strategy;

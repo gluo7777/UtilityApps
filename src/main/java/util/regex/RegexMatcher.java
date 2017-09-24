@@ -44,6 +44,11 @@ public class RegexMatcher {
                 } catch (WrongNumberArgsException e) {
                     return false;
                 }
+            case NUMBER:
+                if(text.matches(CommonPatterns.NUMBER.getPattern()))
+                    return true;
+                else
+                    return false;
             default:
                 return false;
         }
