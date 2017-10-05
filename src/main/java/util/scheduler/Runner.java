@@ -11,7 +11,8 @@ public class Runner {
         // runs job scheduler
         Scheduler s = null;
         try {
-            s = new Scheduler(SchedulerConfiguration.instance().getJobDirectory());
+            s = new Scheduler();
+            s.setJobs(SchedulerConfiguration.instance().getJobDirectory());
             s.run();
         } catch (FileNotFoundException e) {
             System.err.println("Directory does not exist: "+ SchedulerConfiguration.instance().getJobDirectoryPath());

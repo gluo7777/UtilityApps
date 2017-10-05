@@ -1,4 +1,4 @@
-package util.regex;
+package enums;
 
 public enum Strategy {
     /* Date Strategies */

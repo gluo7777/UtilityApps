@@ -1,4 +1,4 @@
-package util.parser;
+package old;
 
 public interface Parser {
 
@@ -6,7 +6,7 @@ public interface Parser {
      * Converts arguments into flags and options
      * @param args arguments to parse
      */
-    void parse(String [] args) throws MissingOptionForFlagException, UnsupportedFlagException;
+//    void parse(String [] args) throws MissingOptionForFlagException;
     /**
      * returns true if parser has a flag
      * @param flag flag to check for

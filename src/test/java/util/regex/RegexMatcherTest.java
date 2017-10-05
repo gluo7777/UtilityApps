@@ -1,10 +1,11 @@
+package util.regex;
+
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 import entity.Address;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import util.regex.RegexMatcher;
-import util.regex.Strategy;
+import enums.Strategy;
 
 import java.util.LinkedList;
 import java.util.List;

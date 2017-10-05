@@ -12,7 +12,12 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
+        <!--https://pholser.github.io/jopt-simple/examples.html-->
+        <dependency>
+            <groupId>net.sf.jopt-simple</groupId>
+            <artifactId>jopt-simple</artifactId>
+            <version>4.9</version>
+        </dependency>
     </dependencies>
 
     <groupId>org.william.apps</groupId>

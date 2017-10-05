@@ -6,6 +6,6 @@
 09/24/2017  12:22 AM    <DIR>          .
 09/24/2017  12:22 AM    <DIR>          ..
 09/24/2017  12:03 AM                16 job1.bat
-09/24/2017  12:22 AM                 0 output.txt
+09/24/2017  07:30 PM                 0 output.txt
                2 File(s)             16 bytes
-               2 Dir(s)  45,717,856,256 bytes free
+               2 Dir(s)  46,679,928,832 bytes free

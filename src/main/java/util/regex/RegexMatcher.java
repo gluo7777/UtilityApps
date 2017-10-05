@@ -2,6 +2,8 @@ package util.regex;
 
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 import entity.Address;
+import enums.CommonPatterns;
+import enums.Strategy;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

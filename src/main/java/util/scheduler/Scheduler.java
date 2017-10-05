@@ -3,50 +3,56 @@ package util.scheduler;
 import java.io.*;
 import java.nio.file.NotDirectoryException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by william.luo on 9/19/2017.
  */
 public class Scheduler {
-    // navigate to job directory
-    // exec bat file
-    // check if file terminated
-    // exec next bat file
-
+    /* Windows executing batch file commands*/
     public static final String EXEC = "cmd.exe";
     public static final String EXEC_ARG = "/C";
+
     public static final String SORT_BY_NAME = "name";
     public static final String SORT_BY_DATE = "date";
 
-    private File workingDirectory;
+    private List<File> jobFiles;
 
-    public Scheduler(File directory) {
-        this.workingDirectory = directory;
+    public Scheduler() {
+
     }
 
-    public File getWorkingDirectory() {
-        return workingDirectory;
+    /**
+     *
+     * @param directory containing jobs to run
+     * @throws NotDirectoryException if File is not a directory
+     */
+    public void setJobs(File directory) throws NotDirectoryException {
+        if (directory != null && directory.isDirectory()) {
+            this.jobFiles = Arrays.asList(directory.listFiles());
+        }else{
+            throw new NotDirectoryException(directory.getAbsolutePath());
+        }
     }
 
-    public void setWorkingDirectory(File workingDirectory) {
-        this.workingDirectory = workingDirectory;
+    /**
+     *
+     * @param jobFiles list of files to execute
+     */
+    public void setJobs(List<File> jobFiles) {
+        this.jobFiles = jobFiles;
     }
 
     /**
      * Loop through each bat file and execute them
      */
-    public void run() throws NotDirectoryException {
-        File dir = this.workingDirectory;
-        File files[];
-        if (!dir.isDirectory()) {
-            throw new NotDirectoryException(dir.getAbsolutePath());
-        }
-        files = dir.listFiles();
-        if (files.length > 0) {
-            this.sortFiles(files);
-            for (File file : files) {
-                this.runJob(file.getName(),dir);
+    public void run(){
+        if (jobFiles.size() > 0) {
+            this.sortFiles(this.jobFiles);
+            for (File file : this.jobFiles) {
+                this.runJob(file.getName(), file.getParentFile());
             }
         } else {
             throw new RuntimeException();
@@ -64,17 +70,17 @@ public class Scheduler {
         }
     }
 
-    private void sortFiles(File[] files) {
+    private void sortFiles(List<File> files) {
         if (SchedulerConfiguration.instance().getSortType().equals(SORT_BY_NAME)) {
-            Arrays.sort(files, (o1, o2) -> o1.getName().compareTo(o2.getName()));
+            Collections.sort(files, Comparator.comparing(File::getName));
         } else if (SchedulerConfiguration.instance().getSortType().equals(SORT_BY_DATE)) {
-            Arrays.sort(files, (o1, o2) -> {
+            Collections.sort(files, (o1, o2) -> {
                 long result = o1.lastModified() - o2.lastModified();
-                if(result > 0){
+                if (result > 0) {
                     return 1;
-                } else if (result < 0){
+                } else if (result < 0) {
                     return -1;
-                } else{
+                } else {
                     return 0;
                 }
             });
