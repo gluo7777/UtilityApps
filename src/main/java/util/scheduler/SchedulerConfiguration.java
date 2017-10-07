@@ -1,5 +1,7 @@
 package util.scheduler;
 
+import enums.Property;
+
 import java.io.*;
 import java.util.Properties;
 
@@ -8,7 +10,7 @@ import java.util.Properties;
  * reads from property file to get properties for scheduler
  */
 public class SchedulerConfiguration {
-    private static final String DEFAULT = "info/defaultScheduler.properties";
+    private static final String DEFAULT = "defaultScheduler.properties";
     private static final String APP = "scheduler.properties";
 
     private Properties properties = null;
@@ -77,17 +79,21 @@ public class SchedulerConfiguration {
         try {
             // load default properties
             Properties defaultProp = new Properties();
-            fs = new FileInputStream(DEFAULT);
-            defaultProp.load(fs);
-            fs.close();
+//            fs = new FileInputStream(DEFAULT);
+            defaultProp.load(this.getClass().getClassLoader().getResourceAsStream(DEFAULT));
+//            fs.close();
 
             // default constructor
             properties = new Properties(defaultProp);
 
             // load properties from last invocation
-            fs = new FileInputStream(APP);
-            properties.load(fs);
-            fs.close();
+//            fs = new FileInputStream(APP);
+            try {
+                properties.load(this.getClass().getClassLoader().getResourceAsStream(APP));
+            } catch (NullPointerException e){
+                // custom file not set by user
+            }
+//            fs.close();
 
         } catch (FileNotFoundException e) {
             // TODO separate try-catch block to handle both files

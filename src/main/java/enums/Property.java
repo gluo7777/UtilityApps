@@ -1,4 +1,4 @@
-package util.scheduler;
+package enums;
 
 /**
  * Created by william.luo on 9/19/2017.
